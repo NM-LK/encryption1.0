@@ -1,3 +1,50 @@
+local blacklist = {
+    "BadPlayer1",
+    "Hacker123",
+    "CheaterABC",
+    "",
+    "要拉黑的用户名2"
+}
+
+local function checkBlacklist()
+    local localPlayer = game.Players.LocalPlayer
+    local username = localPlayer.Name
+    
+    for _, blacklistedName in ipairs(blacklist) do
+        if username == blacklistedName then
+            game.Players.LocalPlayer:Kick("你已被拉黑名单小宝贝~")
+            return true
+        end
+    end
+    return false
+end
+
+if checkBlacklist() then
+    return  
+end
+
+function Antihook()
+    return "Hook"
+end
+
+hookfunction(Antihook, function()
+    return "No Hook"
+end)
+
+hookfunction(game.HttpGet, print)
+
+if not isfunctionhooked(Antihook) or not isfunctionhooked(game.HttpGet) then
+    game:shutdown("别搞我")
+    while true do end
+end
+
+restorefunction(game.HttpGet)
+
+if isfunctionhooked(game.HttpGet) or isfunctionhooked(request) or isfunctionhooked(tostring) then
+    game:shutdown("666")
+    while true do end
+end
+
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local localPlayer = game:GetService("Players").LocalPlayer
 local tycoon
